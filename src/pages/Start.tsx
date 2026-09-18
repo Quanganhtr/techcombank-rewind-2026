@@ -9,10 +9,11 @@ export function Start({ next }: { next: () => void }) {
     <div className="relative h-full w-full overflow-hidden bg-black">
       <StatusBar />
 
-      <p className="absolute left-[24px] top-[74px] text-[40px] font-light leading-[56px] text-white">
-        QUANG ƠI!
-      </p>
-      <img src={logo} alt="Techcombank" width={56} height={56} className="absolute left-[360px] top-[74px]" />
+      {/* greeting and logo share one full-width row: 24px left, right and top */}
+      <div className="absolute inset-x-0 top-[50px] flex items-start justify-between px-[24px] pb-0 pt-[24px]">
+        <p className="text-[40px] font-light leading-[56px] text-white">QUANG ƠI!</p>
+        <img src={logo} alt="Techcombank" width={56} height={56} />
+      </div>
       <p className="absolute left-[24px] top-[154px] text-[40px] font-extralight leading-[56px] text-white">
         TRÒ CHUYỆN VỚI
       </p>
