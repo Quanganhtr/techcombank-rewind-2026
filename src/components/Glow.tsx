@@ -15,11 +15,14 @@ type Layer = {
 export function Glow({
   layers,
   pulse,
+  rise,
   className,
 }: {
   layers: Layer[];
   /** Beat the whole stack slowly, like a heart. */
   pulse?: boolean;
+  /** Undefined: no rise. False: held small. True: grows into place. */
+  rise?: boolean;
   className?: string;
 }) {
   return (
@@ -27,6 +30,8 @@ export function Glow({
       className={cn(
         "pointer-events-none absolute",
         pulse && "glow-heartbeat",
+        rise !== undefined && "glow-rise",
+        rise && "glow-rise--go",
         className,
       )}
       aria-hidden="true"

@@ -137,6 +137,18 @@
     will-change: transform;
   }
 
+  /* The light behind the chat box grows into place. The origin is that stack's own
+     centre (220, 1032) — below the screen edge — so it swells upward from the bottom.
+     Held at the start until the class is unpaused. */
+  .glow-rise {
+    transform-origin: 220px 1032px;
+    animation: glow-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both paused;
+  }
+
+  .glow-rise--go {
+    animation-play-state: running;
+  }
+
   /* the design's grain, kept subtle */
   .grain::after {
     content: "";
@@ -146,6 +158,15 @@
     opacity: 0.32;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes glow-rise {
+  from {
+    transform: scale(0.6);
+  }
+  to {
+    transform: scale(1);
   }
 }
 

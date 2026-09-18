@@ -26,18 +26,22 @@ export const DOME_Y = {
 const COVERS_HEADER = 50;
 /** Top position at which the dome's bottom edge reaches the middle of the screen. */
 const BOTTOM_AT_CENTRE = 478 - DOME_H;
+/** The dome's own top edge reaching the top of the screen. */
+const TOP_AT_SCREEN = 0;
 
 export function GlowDome({
   leaving,
   onBegin,
   onCovered,
   onBottomAtCentre,
+  onTopAtScreen,
   onGone,
 }: {
   leaving: boolean;
   onBegin: () => void;
   onCovered: () => void;
   onBottomAtCentre: () => void;
+  onTopAtScreen: () => void;
   onGone: () => void;
 }) {
   return (
@@ -59,6 +63,7 @@ export function GlowDome({
             : Number.parseFloat(String(latest.y));
         if (!leaving) return;
         if (y <= COVERS_HEADER) onCovered();
+        if (y <= TOP_AT_SCREEN) onTopAtScreen();
         if (y <= BOTTOM_AT_CENTRE) onBottomAtCentre();
       }}
       onAnimationComplete={() => leaving && onGone()}

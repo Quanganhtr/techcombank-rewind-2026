@@ -70,6 +70,17 @@ Speed is `charMs` on the component (38ms; ~0.9s for this line).
 with `SpanStyle(shadow=…)`, both driven by one animated float. Use attributed strings
 rather than a view per character, or line wrapping becomes manual on both platforms.
 
+## The chat box light
+
+The glow behind the chat box is held at 60% while the dome covers it, then grows into
+place the moment the dome's **top edge** reaches the top of the screen — so the light
+hands off from one to the other rather than simply appearing.
+
+`transform-origin` is that stack's own centre (220, 1032), which sits below the screen
+edge, so it swells upward from the bottom instead of expanding around a point you can
+see. Pass `rise` to `<Glow>`: omit it for no rise, `false` to hold it small, `true` to
+let it grow.
+
 ## The glow heartbeat
 
 The dome's glow stack beats slowly — a lub-dub at 1.030 then 1.045, 600ms apart, then a

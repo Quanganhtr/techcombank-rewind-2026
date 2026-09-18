@@ -4,11 +4,11 @@ import { Glow, COMPOSER_GLOW } from "../components/Glow";
 import { CrtScreen } from "../components/CrtScreen";
 
 /** Screen 2 — 2026 opens the conversation. */
-export function First() {
+export function First({ glowIn }: { glowIn: boolean }) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">
       <div className="grain absolute inset-0">
-        <Glow layers={COMPOSER_GLOW} className="inset-0" />
+        <Glow layers={COMPOSER_GLOW} className="inset-0" rise={glowIn} />
         <CrtScreen />
       </div>
 
