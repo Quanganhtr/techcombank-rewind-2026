@@ -47,20 +47,15 @@ the shell rather than in a screen, because it persists across the conversation.
 **Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` for both — the
 blurred layers stay cached, nothing re-rasterises.
 
-## The headline typing
+## The typing reveal
 
-Two lines type in sequence once the dome is clear of the screen: the headline
-"Năm 2026 của bạn ổn chứ?", then the composer's question. Each character ignites
-amber-white and cools to plain white over the next four, with a block cursor on the
-character being struck.
+The composer's question, "Tài sản của tôi / năm nay thế nào?", types itself the moment
+the chat box finishes sliding up — roughly 1.5s after the press, finishing at ~2.7s.
+Each character ignites amber-white and cools to plain white over the next four, with a
+block cursor on the character being struck.
 
-| | Starts | Done |
-| --- | --- | --- |
-| Headline | ~1.1s after the press | ~2.0s |
-| Question | ~2.0s | ~3.2s |
-
-The second is chained off the first's `animationend`, not a timer, so retiming one
-carries the other along.
+It is chained off the slide's completion, not a timer, so retiming the slide carries the
+typing with it. The headline above it is static and simply fades in with its screen.
 
 It runs off one registered custom property, `--cursor`, animated 0→N in CSS. Every
 character knows its own index and derives its own heat, colour and shadow from it — so

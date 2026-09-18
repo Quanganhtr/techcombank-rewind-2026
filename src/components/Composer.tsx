@@ -14,12 +14,14 @@ export function Composer({
   onSend,
   shown,
   typing,
+  onSettled,
 }: {
   question: string;
   onSend: () => void;
   shown: boolean;
-  /** The question types itself in once the headline above has finished. */
+  /** The question types itself in once the box has finished sliding up. */
   typing: boolean;
+  onSettled: () => void;
 }) {
   return (
     <motion.div
@@ -27,6 +29,7 @@ export function Composer({
       initial={{ y: OFFSCREEN_Y }}
       animate={{ y: shown ? 0 : OFFSCREEN_Y }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      onAnimationComplete={() => shown && onSettled()}
     >
       <p className="absolute left-[24px] top-[24px] w-[280px] text-[20px] font-extralight leading-[28px] text-white">
         <GlowType text={question} playing={typing} />

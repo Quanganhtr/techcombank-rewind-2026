@@ -6,10 +6,6 @@ import { FirstSentence } from "./FirstSentence";
 export type PageProps = {
   next: () => void;
   prev: () => void;
-  /** True once the dome is clear of the screen, or straight away on a deep link. */
-  domeCleared: boolean;
-  /** Called when a screen's headline has finished typing. */
-  onHeadlineTyped: () => void;
 };
 
 export type Page = {
@@ -20,11 +16,6 @@ export type Page = {
 /** The flow, in order. Each screen advances itself through its own control. */
 export const pages: Page[] = [
   { id: "start", render: () => <Start /> },
-  {
-    id: "first",
-    render: ({ domeCleared, onHeadlineTyped }) => (
-      <First domeCleared={domeCleared} onHeadlineTyped={onHeadlineTyped} />
-    ),
-  },
+  { id: "first", render: () => <First /> },
   { id: "first-sentence", render: () => <FirstSentence /> },
 ];
