@@ -49,6 +49,21 @@
       inset 0 0 24px rgba(255, 255, 255, 0.72);
   }
 
+  /* CRT scanlines: 1px line, 1px gap, rolling downward.
+     This loop is CSS rather than Motion: Motion stops repeating animations
+     that live inside an AnimatePresence child subtree (verified — identical
+     code cycles at the app root and freezes at its end value in here). */
+  .crt-scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.9) 0 1px,
+      transparent 1px 2px
+    );
+    animation: crt-roll var(--crt-roll, 0.77s) linear infinite;
+    will-change: transform;
+  }
+
+
   /* the design's grain, kept subtle */
   .grain::after {
     content: "";
@@ -61,11 +76,21 @@
   }
 }
 
+@keyframes crt-roll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(2px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

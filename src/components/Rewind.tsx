@@ -42,7 +42,7 @@ export function Rewind() {
   return (
     <PhoneFrame>
       <div className="relative h-full w-full bg-black">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
+        <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={page.id}
             custom={direction}

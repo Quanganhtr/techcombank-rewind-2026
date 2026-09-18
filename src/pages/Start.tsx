@@ -1,6 +1,6 @@
-import { motion } from "motion/react";
 import { StatusBar } from "../components/StatusBar";
 import { Glow, START_GLOW } from "../components/Glow";
+import { CrtScreen } from "../components/CrtScreen";
 import logo from "../assets/logo-tcb.svg";
 
 /** Screen 1 — the invitation. */
@@ -30,15 +30,14 @@ export function Start({ next }: { next: () => void }) {
       {/* the dome of light, and the button sitting in its dark centre */}
       <div className="grain dome-inner-light absolute left-0 top-[399px] h-[558px] w-[440px] overflow-hidden rounded-t-full bg-glow-50">
         <Glow layers={START_GLOW} className="inset-0" />
+        <CrtScreen />
       </div>
 
-      <motion.button
+      <button
         type="button"
         onClick={next}
         aria-label="Nhấn để bắt đầu"
         className="absolute left-[160px] top-[571px] h-[188px] w-[120px] rounded-full"
-        animate={{ scale: [1, 1.03, 1] }}
-        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
       >
         {/* dashed ring: 4px stroke centred on the 120x188 pill, 1/12 dash, butt caps.
             pathLength normalises the perimeter to 38 whole 1+12 periods, so the
@@ -68,7 +67,7 @@ export function Start({ next }: { next: () => void }) {
           <br />
           BẮT ĐẦU
         </span>
-      </motion.button>
+      </button>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { StatusBar } from "../components/StatusBar";
 import { Header } from "../components/Header";
 import { Composer } from "../components/Composer";
 import { Glow, ANSWER_GLOW } from "../components/Glow";
+import { CrtScreen } from "../components/CrtScreen";
 
 const QUESTION = "Tài sản của tôi\nnăm nay thế nào?";
 
@@ -12,6 +13,7 @@ export function FirstSentence({ next }: { next: () => void }) {
     <div className="relative h-full w-full overflow-hidden bg-black">
       <div className="grain absolute inset-0">
         <Glow layers={ANSWER_GLOW} className="inset-0" />
+        <CrtScreen />
       </div>
 
       <StatusBar />
