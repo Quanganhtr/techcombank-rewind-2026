@@ -47,6 +47,25 @@ the shell rather than in a screen, because it persists across the conversation.
 **Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` for both — the
 blurred layers stay cached, nothing re-rasterises.
 
+## The headline typing
+
+"Năm 2026 của bạn ổn chứ?" types itself once the dome is clear of the screen. Each
+character ignites amber-white and cools to plain white over the next four characters,
+with a block cursor on the character being struck.
+
+It runs off one registered custom property, `--cursor`, animated 0→N in CSS. Every
+character knows its own index and derives its own heat, colour and shadow from it — so
+there is no per-frame JavaScript, and it is unaffected by Motion's repeating animations
+stalling inside an `AnimatePresence` child.
+
+The string is split with `Intl.Segmenter` at **grapheme** granularity, not by code
+point, so a Vietnamese diacritic can never be revealed a frame after its base letter.
+Speed is `charMs` on the component (38ms; ~0.9s for this line).
+
+**Native:** SwiftUI `AttributedString` with per-run `.shadow`, Compose `AnnotatedString`
+with `SpanStyle(shadow=…)`, both driven by one animated float. Use attributed strings
+rather than a view per character, or line wrapping becomes manual on both platforms.
+
 ## The start ring
 
 From the Figma motion timeline on node `10:173`:

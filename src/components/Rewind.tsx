@@ -17,6 +17,8 @@ export function Rewind() {
   const [domeMounted, setDomeMounted] = useState(() => initialIndex() === 0);
   /** The composer rises as the dome's bottom clears the middle of the screen. */
   const [composerShown, setComposerShown] = useState(() => initialIndex() > 0);
+  /** The headline types itself once the dome is off the screen entirely. */
+  const [domeCleared, setDomeCleared] = useState(() => initialIndex() > 0);
   const swapped = useRef(false);
 
   const go = useCallback((to: number) => {
@@ -32,6 +34,7 @@ export function Rewind() {
       setDomeMounted(true);
       setLeaving(false);
       setComposerShown(false);
+      setDomeCleared(false);
       swapped.current = false;
     }
   }, [index]);
@@ -78,7 +81,7 @@ export function Rewind() {
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0"
             >
-              {page.render({ next, prev })}
+              {page.render({ next, prev, domeCleared })}
             </motion.div>
           </AnimatePresence>
 
@@ -95,7 +98,10 @@ export function Rewind() {
               onBegin={begin}
               onCovered={onCovered}
               onBottomAtCentre={() => setComposerShown(true)}
-              onGone={() => setDomeMounted(false)}
+              onGone={() => {
+                setDomeMounted(false);
+                setDomeCleared(true);
+              }}
             />
           )}
         </div>

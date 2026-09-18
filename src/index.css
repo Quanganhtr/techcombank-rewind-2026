@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Drives the typing reveal. Registered so it can be animated as a number. */
+@property --cursor {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   /* the status bar is real iOS chrome, so it uses the system face */
@@ -79,6 +86,47 @@
     animation: ring-weight 2s infinite;
   }
 
+  /* Typing reveal: each character reads --cursor and derives its own heat, so the
+     whole line animates from a single property with no per-frame JavaScript. */
+  .glow-type {
+    --cursor: 0;
+    white-space: pre-wrap;
+  }
+
+  .glow-type--playing {
+    animation: glow-type var(--glow-type-dur) linear forwards;
+  }
+
+  .glow-type-char {
+    /* how far the cursor has passed this character */
+    --d: calc(var(--cursor) - var(--n));
+    /* 1 at the cursor, fading to 0 four characters behind it */
+    --heat: clamp(0, calc(1 - var(--d) / 4), 1);
+    /* a steep ramp, so a character snaps on rather than fading in */
+    --on: clamp(0, calc(var(--d) * 3), 1);
+
+    position: relative;
+    opacity: var(--on);
+    color: color-mix(in oklab, #fff, #ffc266 calc(var(--heat) * 60%));
+    text-shadow:
+      0 0 calc(var(--heat) * 18px) rgba(255, 194, 102, calc(var(--heat) * 0.9)),
+      0 0 calc(var(--heat) * 7px) rgba(255, 255, 255, calc(var(--heat) * 0.75));
+  }
+
+  /* block cursor, visible only on the character currently being struck */
+  .glow-type-char::after {
+    content: "";
+    position: absolute;
+    right: -0.07em;
+    top: 0.1em;
+    bottom: 0.12em;
+    width: 0.07em;
+    background: #ffc266;
+    /* on for exactly the character being struck: 0 < d < 1 */
+    opacity: calc(clamp(0, calc(var(--d) * 20), 1) * clamp(0, calc((1 - var(--d)) * 20), 1));
+    box-shadow: 0 0 10px rgba(255, 194, 102, 0.9);
+  }
+
   /* the design's grain, kept subtle */
   .grain::after {
     content: "";
@@ -88,6 +136,12 @@
     opacity: 0.32;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes glow-type {
+  to {
+    --cursor: var(--glow-type-count);
   }
 }
 
