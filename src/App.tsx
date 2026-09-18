@@ -11,15 +11,6 @@ export default function App() {
       </header>
 
       <Rewind />
-
-      <footer className="absolute inset-x-0 bottom-6 flex flex-col items-center gap-1 px-6 text-center">
-        <p className="text-[14px] font-medium text-tcb-bone/85">
-          Chạm nửa phải để đi tiếp, nửa trái để quay lại. Giữ để tạm dừng.
-        </p>
-        <p className="text-[13px] text-tcb-bone/50">
-          Bản demo tương tác — đang chờ các trang thiết kế.
-        </p>
-      </footer>
     </main>
   );
 }

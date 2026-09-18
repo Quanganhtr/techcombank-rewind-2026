@@ -11,7 +11,7 @@ const SCREEN_X = 16;
 const SCREEN_Y = 16;
 
 /** Scales the fixed device canvas down to whatever the window allows. */
-function useFitScale(margin = 170) {
+function useFitScale(margin = 120) {
   const [scale, setScale] = useState(1);
   useEffect(() => {
     const fit = () =>
