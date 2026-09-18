@@ -14,9 +14,9 @@ export function Start({ next }: { next: () => void }) {
         <p className="text-[40px] font-light leading-[56px] text-white">QUANG ƠI!</p>
         <img src={logo} alt="Techcombank" width={56} height={56} />
       </div>
-      <p className="absolute left-[24px] top-[154px] text-[40px] font-extralight leading-[56px] text-white">
-        TRÒ CHUYỆN VỚI
-      </p>
+      <div className="absolute inset-x-0 top-[130px] p-[24px]">
+        <p className="text-[40px] font-extralight leading-[56px] text-white">TRÒ CHUYỆN VỚI</p>
+      </div>
       <p className="absolute left-[-44px] top-[204px] w-[529px] text-[200px] font-light leading-[196px] text-white">
         2026
       </p>
