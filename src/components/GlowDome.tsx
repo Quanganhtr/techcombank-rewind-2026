@@ -72,25 +72,45 @@ export function GlowDome({
         aria-label="Bắt đầu"
         className="absolute left-[160px] top-[172px] h-[188px] w-[120px] rounded-full"
       >
-        {/* 4px stroke centred on the pill, 1/12 dash, butt caps; pathLength closes it evenly */}
+        {/* Dotted ring with the design's path-trim sweep. SVG cannot dash and trim the
+            same stroke, so the trim is a mask over the dotted ring.
+            Native: SwiftUI Shape.trim(from:to:), Compose PathMeasure.getSegment. */}
         <svg
-          className="absolute left-[-2px] top-[-2px]"
-          width="124"
-          height="192"
-          viewBox="0 0 124 192"
+          className="absolute left-[-6px] top-[-6px]"
+          width="132"
+          height="200"
+          viewBox="0 0 132 200"
           aria-hidden="true"
         >
+          <defs>
+            <mask id="ring-trim" maskUnits="userSpaceOnUse">
+              <rect
+                className="ring-sweep"
+                x="6"
+                y="6"
+                width="120"
+                height="188"
+                rx="60"
+                fill="none"
+                stroke="white"
+                strokeWidth="16"
+                pathLength={1}
+                strokeDasharray="0.16 0.84"
+              />
+            </mask>
+          </defs>
           <rect
-            x="2"
-            y="2"
+            className="ring-dots"
+            x="6"
+            y="6"
             width="120"
             height="188"
             rx="60"
             fill="none"
             stroke="white"
-            strokeWidth="4"
             strokeDasharray="1 12"
             pathLength={494}
+            mask="url(#ring-trim)"
           />
         </svg>
         <span className="font-system absolute inset-0 flex items-center justify-center text-[18px] font-extralight leading-[21px] text-white">

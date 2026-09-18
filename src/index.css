@@ -68,6 +68,17 @@
   }
 
 
+  /* The start ring's path-trim motion, from the Figma timeline on node 10:173:
+     a 16% arc window rotating one lap per second, and an 8->4 stroke pulse that
+     snaps back at the top of each 2s loop. */
+  .ring-sweep {
+    animation: ring-sweep 2s linear infinite;
+  }
+
+  .ring-dots {
+    animation: ring-weight 2s infinite;
+  }
+
   /* the design's grain, kept subtle */
   .grain::after {
     content: "";
@@ -77,6 +88,26 @@
     opacity: 0.32;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes ring-sweep {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -2; /* two laps, pathLength is normalised to 1 */
+  }
+}
+
+@keyframes ring-weight {
+  0% {
+    stroke-width: 8;
+    animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+  50%,
+  100% {
+    stroke-width: 4;
   }
 }
 

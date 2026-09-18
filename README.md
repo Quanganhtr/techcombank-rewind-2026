@@ -47,6 +47,26 @@ the shell rather than in a screen, because it persists across the conversation.
 **Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` for both — the
 blurred layers stay cached, nothing re-rasterises.
 
+## The start ring
+
+From the Figma motion timeline on node `10:173`:
+
+| Field | Motion |
+| --- | --- |
+| `pathTrimStart` / `pathTrimEnd` | both advance 1.0 per second, holding a 0.16 window — a 16% arc sweeping one lap per second |
+| `strokeWeight` | 8 → 4 over the first second on an ease-in-out, then holds; snaps back to 8 at the top of the 2s loop |
+
+SVG cannot dash and trim the same stroke, so the trim is a **mask** over the dotted
+ring: the mask path carries `stroke-dasharray: 0.16 0.84` with `pathLength=1` and an
+animating `stroke-dashoffset`.
+
+The visible portion is the literal reading of the timeline — start `0.92` to end `1.08`
+is 16% of the path. If the intent was the complement (84% visible with a 16% gap
+chasing round), swap the mask's dash array to `0.84 0.16`.
+
+**Native:** `Shape.trim(from:to:)` in SwiftUI, `PathMeasure.getSegment` in Compose —
+both support path trim directly, no mask needed.
+
 ## Adding screens
 
 Add a component and an entry in [`src/pages/index.tsx`](src/pages/index.tsx). Each screen fills the
