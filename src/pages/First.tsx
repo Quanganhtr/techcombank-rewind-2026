@@ -16,7 +16,7 @@ export function First({ next }: { next: () => void }) {
       <StatusBar />
       <Header title="Techcombank Rewind" />
 
-      <h1 className="absolute left-[24px] top-[154px] w-[392px] text-[40px] font-light leading-[56px] text-white">
+      <h1 className="absolute left-[24px] top-[154px] w-[392px] text-[40px] font-extralight leading-[56px] text-white">
         Năm 2026 của bạn ổn chứ?
       </h1>
 

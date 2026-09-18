@@ -12,13 +12,13 @@ export function Start({ next }: { next: () => void }) {
       {/* Header: the year sits under both black bars, so they clip the rotated numerals */}
       <div className="absolute inset-x-0 top-[50px] h-[349px]">
         <div className="absolute inset-x-0 top-[185px] h-[164px]">
-          <p className="absolute left-[-30px] top-[-16px] w-[499px] rotate-[-12deg] text-[200px] font-light leading-[196px] text-white">
+          <p className="absolute left-[-30px] top-[-16px] w-[499px] rotate-[-12deg] text-[200px] font-extralight leading-[196px] text-white">
             2026
           </p>
         </div>
 
         <div className="absolute inset-x-0 top-0 flex items-start justify-between bg-black px-[24px] pb-0 pt-[24px]">
-          <p className="text-[40px] font-light leading-[56px] text-white">QUANG ƠI!</p>
+          <p className="text-[40px] font-extralight leading-[56px] text-white">QUANG ƠI!</p>
           <img src={logo} alt="Techcombank" width={56} height={56} />
         </div>
 
@@ -55,7 +55,7 @@ export function Start({ next }: { next: () => void }) {
             strokeDasharray="1 12"
           />
         </svg>
-        <span className="font-system absolute inset-0 flex items-center justify-center text-center text-[18px] font-medium leading-[21px] text-white">
+        <span className="font-system absolute inset-0 flex items-center justify-center text-center text-[18px] font-extralight leading-[21px] text-white">
           NHẤN ĐỂ
           <br />
           BẮT ĐẦU
