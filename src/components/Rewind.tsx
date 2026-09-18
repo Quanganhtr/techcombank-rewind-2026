@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { PhoneFrame } from "./PhoneFrame";
-import { GlowDome, type DomeStage } from "./GlowDome";
+import { GlowDome } from "./GlowDome";
 import { pages } from "../pages";
 
 /** ?page=2 opens the flow on a given screen — handy when presenting. */
@@ -10,22 +10,11 @@ function initialIndex() {
   return Number.isInteger(n) && n >= 0 && n < pages.length ? n : 0;
 }
 
-/** How long the dome holds at its charged position before it travels. */
-const CHARGE_MS = 300;
-/**
- * How far into the travel the screens swap. The dome covers the header once its top
- * passes y=50 — about 12% of the way — so swapping at 250ms keeps the crossfade
- * hidden behind it, as the design does.
- */
-const SWAP_MS = 250;
-
 export function Rewind() {
   const [index, setIndex] = useState(initialIndex);
-  const [stage, setStage] = useState<DomeStage>("rest");
+  const [leaving, setLeaving] = useState(false);
   const [domeMounted, setDomeMounted] = useState(() => initialIndex() === 0);
-  const timers = useRef<number[]>([]);
-
-  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+  const swapped = useRef(false);
 
   const go = useCallback((to: number) => {
     setIndex(Math.min(pages.length - 1, Math.max(0, to)));
@@ -38,55 +27,78 @@ export function Rewind() {
   useEffect(() => {
     if (index === 0) {
       setDomeMounted(true);
-      setStage("rest");
+      setLeaving(false);
+      swapped.current = false;
     }
   }, [index]);
 
   /**
-   * Pressing BẮT ĐẦU: the dome charges toward the viewer, then travels up and off
-   * while the conversation fades in underneath it — moves 1 through 3 in the design.
+   * Pressing BẮT ĐẦU sends the dome up and off in one unbroken move — the design's
+   * moves 1-3 are waypoints along it. The screens swap the moment the dome covers the
+   * header, driven by its actual position rather than a timer, so the crossfade stays
+   * hidden however the easing is tuned.
    */
-  const begin = useCallback(() => {
-    setStage("charge");
-    timers.current.push(
-      window.setTimeout(() => setStage("gone"), CHARGE_MS),
-      window.setTimeout(() => next(), CHARGE_MS + SWAP_MS),
-    );
+  const begin = useCallback(() => setLeaving(true), []);
+
+  /** Back to Start — the dome comes with it, via the effect above. */
+  const restart = useCallback(() => go(0), [go]);
+
+  const onCovered = useCallback(() => {
+    if (swapped.current) return;
+    swapped.current = true;
+    next();
   }, [next]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") index === 0 ? begin() : next();
       else if (e.key === "ArrowLeft") prev();
-      else if (e.key.toLowerCase() === "r") go(0);
+      else if (e.key.toLowerCase() === "r") restart();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [begin, next, prev, go, index]);
+  }, [begin, next, prev, restart, index]);
 
   const page = pages[index];
 
   return (
-    <PhoneFrame>
-      <div className="relative h-full w-full bg-black">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={page.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute inset-0"
-          >
-            {page.render({ next, prev })}
-          </motion.div>
-        </AnimatePresence>
+    <>
+      <PhoneFrame>
+        <div className="relative h-full w-full bg-black">
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={page.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0"
+            >
+              {page.render({ next, prev })}
+            </motion.div>
+          </AnimatePresence>
 
-        {/* above the screens, as the design layers it — it occludes 2026 on the way up */}
-        {domeMounted && (
-          <GlowDome stage={stage} onBegin={begin} onGone={() => setDomeMounted(false)} />
-        )}
-      </div>
-    </PhoneFrame>
+          {/* above the screens, as the design layers it — it occludes 2026 on the way up */}
+          {domeMounted && (
+            <GlowDome
+              leaving={leaving}
+              onBegin={begin}
+              onCovered={onCovered}
+              onGone={() => setDomeMounted(false)}
+            />
+          )}
+        </div>
+      </PhoneFrame>
+
+      {index > 0 && (
+        <button
+          type="button"
+          onClick={restart}
+          className="fixed bottom-6 right-6 z-50 rounded-full border border-white/20 px-5 py-2.5 text-[14px] text-white/60 transition-colors hover:border-white/40 hover:text-white"
+        >
+          Xem lại từ đầu
+        </button>
+      )}
+    </>
   );
 }

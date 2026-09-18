@@ -3,32 +3,37 @@ import { Glow, START_GLOW } from "./Glow";
 import { CrtScreen } from "./CrtScreen";
 
 /**
- * The ACTION dome. It is one rigid group — pale field, glow stack, ring and label
- * all hold the same offsets from its top edge in every frame of the design — so the
- * whole interaction is a single translateY. That keeps the blurred layers cached
- * instead of re-rasterising, and ports to .offset(y:) / Modifier.offset natively.
+ * The ACTION dome. It is one rigid group — pale field, glow stack, ring and label all
+ * hold the same offsets from its top edge in every frame of the design — so the whole
+ * move is a single translateY. That keeps the blurred layers cached instead of
+ * re-rasterising, and ports to .offset(y:) / Modifier.offset natively.
  *
  * Figma draws it 558 tall at rest and 956 tall once it moves, but at rest the extra
  * height falls below the screen edge, so a fixed 956 is visually identical.
  */
 export const DOME_H = 956;
 
-/** Dome top edge, per frame of the design. */
+/**
+ * Dome top edge. The design's move 1/2/3 are waypoints along one continuous travel,
+ * not stops — rest and gone are the only two states the animation targets.
+ */
 export const DOME_Y = {
   rest: 399, // Start
-  charge: 182, // move 1 — grows toward the viewer on press
-  gone: -956, // past move 3, fully clear of the screen
+  gone: -956, // clear of the screen, past move 3
 } as const;
 
-export type DomeStage = keyof typeof DOME_Y;
+/** Once the top passes the header, the screens can swap unseen behind the dome. */
+const COVERS_HEADER = 50;
 
 export function GlowDome({
-  stage,
+  leaving,
   onBegin,
+  onCovered,
   onGone,
 }: {
-  stage: DomeStage;
+  leaving: boolean;
   onBegin: () => void;
+  onCovered: () => void;
   onGone: () => void;
 }) {
   return (
@@ -36,13 +41,18 @@ export function GlowDome({
       className="dome-inner-light grain absolute inset-x-0 z-40 overflow-hidden rounded-[220px] bg-dome"
       style={{ height: DOME_H, top: 0 }}
       initial={{ y: DOME_Y.rest }}
-      animate={{ y: DOME_Y[stage] }}
+      animate={{ y: leaving ? DOME_Y.gone : DOME_Y.rest }}
       transition={
-        stage === "gone"
-          ? { duration: 0.9, ease: [0.32, 0, 0.2, 1] }
-          : { duration: 0.32, ease: [0.16, 1, 0.3, 1] }
+        leaving
+          ? // one unbroken accelerating move: it rises, then launches away
+            { duration: 1.05, ease: [0.55, 0, 0.85, 0.45] }
+          : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
       }
-      onAnimationComplete={() => stage === "gone" && onGone()}
+      onUpdate={(latest) => {
+        const y = typeof latest.y === "number" ? latest.y : Number.parseFloat(String(latest.y));
+        if (leaving && y <= COVERS_HEADER) onCovered();
+      }}
+      onAnimationComplete={() => leaving && onGone()}
     >
       <Glow layers={START_GLOW} className="inset-0" />
       <CrtScreen />

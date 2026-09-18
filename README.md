@@ -29,13 +29,15 @@ every frame — so the whole move is a single `translateY`:
 | Stage | Dome top | Figma frame |
 | --- | --- | --- |
 | rest | 399 | Start |
-| charge | 182 | move 1 |
-| travelling | → −956 | move 2, move 3 |
+| — | 182 | move 1 (passed through, not held) |
+| — | → −956 | move 2, move 3 |
 
 Figma draws the dome 558 tall at rest and 956 tall once it moves, but at rest the extra
 height falls past the screen edge, so a fixed 956 is visually identical and keeps the
-animation a pure transform. The screens swap 250ms into the travel, while the dome
-covers the header, so the crossfade never shows.
+animation a pure transform. Moves 1-3 are waypoints along one unbroken travel, not stops — the dome accelerates
+away in a single tween. The screens swap the moment the dome's top passes y=50 and
+covers the header, driven by its real position rather than a timer, so the crossfade
+stays hidden however the easing is retuned.
 
 **Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` — the blurred
 layers stay cached, nothing re-rasterises.
