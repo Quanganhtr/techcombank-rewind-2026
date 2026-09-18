@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+
+  /* Techcombank red, the stage this whole thing sits on */
+  --color-tcb-red: #e3001b;
+  --color-tcb-red-deep: #a80016;
+  --color-tcb-ink: #171014;
+  --color-tcb-bone: #f4f2ed;
+  --color-tcb-gold: #f6c445;
+  --color-tcb-pine: #0e4f4a;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply font-sans bg-tcb-red text-tcb-bone antialiased;
+    overscroll-behavior: none;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-tcb-gold);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* the stage reads as a printed statement page: ruled, not decorative */
+  .ledger-field {
+    background-image:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 47px,
+        rgba(0, 0, 0, 0.07) 47px,
+        rgba(0, 0, 0, 0.07) 48px
+      );
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
