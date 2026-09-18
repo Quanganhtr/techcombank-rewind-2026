@@ -52,7 +52,7 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
           alt=""
           width={FRAME_W}
           height={FRAME_H}
-          className="pointer-events-none absolute inset-0 select-none drop-shadow-[0_40px_70px_rgba(60,0,8,0.45)]"
+          className="pointer-events-none absolute inset-0 select-none drop-shadow-[0_40px_70px_rgba(0,0,0,0.65)]"
         />
       </div>
     </div>

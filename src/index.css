@@ -18,7 +18,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply font-sans bg-tcb-red text-tcb-bone antialiased;
+    @apply font-sans bg-black text-tcb-bone antialiased;
     overscroll-behavior: none;
   }
   :focus-visible {
@@ -35,8 +35,8 @@
         to bottom,
         transparent 0px,
         transparent 47px,
-        rgba(0, 0, 0, 0.07) 47px,
-        rgba(0, 0, 0, 0.07) 48px
+        rgba(255, 255, 255, 0.04) 47px,
+        rgba(255, 255, 255, 0.04) 48px
       );
   }
   .tabular {
