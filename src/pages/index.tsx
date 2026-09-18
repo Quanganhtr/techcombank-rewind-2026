@@ -1,17 +1,18 @@
 import type { ReactNode } from "react";
-import { Placeholder } from "./Placeholder";
+import { Start } from "./Start";
+import { First } from "./First";
+import { FirstSentence } from "./FirstSentence";
+
+export type PageProps = { next: () => void; prev: () => void };
 
 export type Page = {
   id: string;
-  /** Background tone of the page — sets the progress bar colour so it stays legible. */
-  tone: "dark" | "light";
-  render: () => ReactNode;
+  render: (p: PageProps) => ReactNode;
 };
 
-/**
- * The deck. Add one entry per screen; the player handles progress, autoplay,
- * tap zones, swipe and keyboard for whatever is in this list.
- */
+/** The flow, in order. Each screen advances itself through its own control. */
 export const pages: Page[] = [
-  { id: "placeholder", tone: "dark", render: () => <Placeholder /> },
+  { id: "start", render: ({ next }) => <Start next={next} /> },
+  { id: "first", render: ({ next }) => <First next={next} /> },
+  { id: "first-sentence", render: ({ next }) => <FirstSentence next={next} /> },
 ];

@@ -1,49 +1,72 @@
 # Techcombank Rewind 2026
 
-An interactive demo shell: a tap-through deck of screens played inside an iPhone 17 Pro Max
-mockup on a desktop stage, built to show how the flow looks and how it feels to move through it.
+An interactive demo of Rewind 2026 — a conversation with your own year — played inside an
+iPhone 17 Pro Max mockup on a black stage, built to be shown on a laptop.
 
 **Live demo:** https://quanganhtr.github.io/techcombank-rewind-2026/
 
-The deck is currently empty — one placeholder screen — and waiting for the real designs.
+Built from the Figma file [Rewind 2026](https://www.figma.com/design/xo6Gp5G7NvdKw2NZbRZfKZ/Rewind-2026),
+board "Option 1".
+
+## The flow
+
+| # | Screen | Advances when |
+| --- | --- | --- |
+| 1 | `Start` — QUANG ƠI! / TRÒ CHUYỆN VỚI 2026 | you press the dotted **NHẤN ĐỂ BẮT ĐẦU** ring |
+| 2 | `First` — "Năm 2026 của bạn ổn chứ?" | you press **Gửi** |
+| 3 | `FirstSentence` — the answer card, +28.7% | — |
+
+Screens drive themselves through their own controls, so there is no autoplay and no tap-to-advance
+overlay that would swallow a button press. For presenting, `←` and `→` step through the flow, `R`
+returns to the start, and `?page=2` opens directly on a given screen.
 
 ## Adding screens
 
-Each screen is a component that fills the 440×956 device canvas. Add it to the list in
-[`src/pages/index.tsx`](src/pages/index.tsx):
+Add a component and an entry in [`src/pages/index.tsx`](src/pages/index.tsx). Each screen fills the
+440×956 canvas and receives `next` / `prev`:
 
 ```tsx
 export const pages: Page[] = [
-  { id: "intro",  tone: "dark",  render: () => <Intro /> },
-  { id: "spend",  tone: "light", render: () => <Spend /> },
+  { id: "start", render: ({ next }) => <Start next={next} /> },
 ];
 ```
 
-`tone` is the screen's background tone — it keeps the progress bar legible against it. Everything
-else (navigation, progress, autoplay, transitions) is handled by the player. Delete
-[`src/pages/Placeholder.tsx`](src/pages/Placeholder.tsx) once real screens are in.
+Screens are positioned with absolute coordinates taken straight from Figma, so they match the
+design 1:1 rather than approximating it.
 
-## Controls
+## Pulling from Figma
 
-| Action | Result |
-| --- | --- |
-| Tap / click the right side | Next screen |
-| Tap / click the left side | Previous screen |
-| Hold | Pause |
-| Swipe left / right | Next / previous screen |
-| `←` `→` | Previous / next screen |
-| `Space` | Pause or resume |
-| `R` | Start over |
+Put a Figma personal access token (scope: **File content** read) in `.env.local`:
 
-Screens also advance on their own every 6.2 seconds once there is more than one. Append `?page=3`
-to the URL to open the deck on a specific screen — useful when walking someone through one of them.
+```
+FIGMA_TOKEN=figd_…
+```
+
+Then:
+
+```bash
+node scripts/figma-list.mjs      # pages and top-level frames
+node scripts/figma-screens.mjs   # trees + PNG renders + a type/colour summary
+node scripts/figma-dump.mjs 1:69 # compact layout tree for one screen
+node scripts/figma-assets.mjs    # re-export the logo and send icon
+```
+
+Output lands in a gitignored `figma/` folder. `.env.local` is gitignored too.
 
 ## The device frame
 
-[`src/assets/mockup.png`](src/assets/mockup.png) is a 472×988 PNG with a transparent screen
-cutout measuring 440×956 at offset (16, 16). Screen content is rendered *behind* the image, so the
-bezel and Dynamic Island mask it for free. Swapping in a different mockup means re-measuring those
-four numbers at the top of [`src/components/PhoneFrame.tsx`](src/components/PhoneFrame.tsx).
+[`src/assets/mockup.png`](src/assets/mockup.png) is a 472×988 PNG with a transparent screen cutout
+of 440×956 at offset (16, 16). Screen content renders *behind* it, so the bezel and Dynamic Island
+mask it for free. Swapping the mockup means re-measuring those four numbers at the top of
+[`src/components/PhoneFrame.tsx`](src/components/PhoneFrame.tsx).
+
+## Design notes
+
+The amber light is built the way the design builds it: stacked blurred pills, palest and widest at
+the outside down to near-black in the middle ([`src/components/Glow.tsx`](src/components/Glow.tsx)).
+Figma's layer-blur radius is converted to a CSS blur of `radius / 2.4`, which matches the reference
+renders most closely. Type is Plus Jakarta Sans (200/300/400/600); the status bar uses the system
+face, as real iOS chrome would.
 
 ## Running it locally
 
@@ -61,15 +84,16 @@ Vite, React 19, TypeScript, Tailwind CSS v4, Motion. Deployed to GitHub Pages by
 
 ```
 src/
-  App.tsx                    stage the phone sits on
+  App.tsx                    black stage the phone sits on
   pages/
-    index.tsx                the deck — add screens here
-    Placeholder.tsx          stand-in until the real screens land
+    index.tsx                the flow, in order
+    Start.tsx  First.tsx  FirstSentence.tsx
   components/
-    Rewind.tsx               playback: autoplay clock, tap zones, swipe, keyboard
-    PhoneFrame.tsx           device frame + 440×956 screen canvas, scaled to the window
-  lib/
-    cn.ts                    clsx + tailwind-merge
-    useCountUp.ts            number animation, respects reduced motion
-  assets/mockup.png          iPhone 17 Pro Max frame
+    Rewind.tsx               screen transitions, swipe, keyboard
+    PhoneFrame.tsx           device frame + 440×956 canvas, scaled to the window
+    Glow.tsx                 the stacked-blur light source
+    Header.tsx  Composer.tsx  StatusBar.tsx
+  lib/cn.ts                  clsx + tailwind-merge
+  assets/                    mockup, logo, send icon
+scripts/                     Figma REST pullers
 ```
