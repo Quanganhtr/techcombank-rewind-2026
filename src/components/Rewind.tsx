@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { PhoneFrame } from "./PhoneFrame";
 import { GlowDome } from "./GlowDome";
+import { Composer } from "./Composer";
 import { pages } from "../pages";
 
 /** ?page=2 opens the flow on a given screen — handy when presenting. */
@@ -14,6 +15,8 @@ export function Rewind() {
   const [index, setIndex] = useState(initialIndex);
   const [leaving, setLeaving] = useState(false);
   const [domeMounted, setDomeMounted] = useState(() => initialIndex() === 0);
+  /** The composer rises as the dome's bottom clears the middle of the screen. */
+  const [composerShown, setComposerShown] = useState(() => initialIndex() > 0);
   const swapped = useRef(false);
 
   const go = useCallback((to: number) => {
@@ -28,6 +31,7 @@ export function Rewind() {
     if (index === 0) {
       setDomeMounted(true);
       setLeaving(false);
+      setComposerShown(false);
       swapped.current = false;
     }
   }, [index]);
@@ -79,11 +83,18 @@ export function Rewind() {
           </AnimatePresence>
 
           {/* above the screens, as the design layers it — it occludes 2026 on the way up */}
+          <Composer
+            question={"Tài sản của tôi\nnăm nay thế nào?"}
+            onSend={next}
+            shown={composerShown}
+          />
+
           {domeMounted && (
             <GlowDome
               leaving={leaving}
               onBegin={begin}
               onCovered={onCovered}
+              onBottomAtCentre={() => setComposerShown(true)}
               onGone={() => setDomeMounted(false)}
             />
           )}

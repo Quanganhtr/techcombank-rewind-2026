@@ -24,16 +24,20 @@ export const DOME_Y = {
 
 /** Once the top passes the header, the screens can swap unseen behind the dome. */
 const COVERS_HEADER = 50;
+/** Top position at which the dome's bottom edge reaches the middle of the screen. */
+const BOTTOM_AT_CENTRE = 478 - DOME_H;
 
 export function GlowDome({
   leaving,
   onBegin,
   onCovered,
+  onBottomAtCentre,
   onGone,
 }: {
   leaving: boolean;
   onBegin: () => void;
   onCovered: () => void;
+  onBottomAtCentre: () => void;
   onGone: () => void;
 }) {
   return (
@@ -49,8 +53,13 @@ export function GlowDome({
           : { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
       }
       onUpdate={(latest) => {
-        const y = typeof latest.y === "number" ? latest.y : Number.parseFloat(String(latest.y));
-        if (leaving && y <= COVERS_HEADER) onCovered();
+        const y =
+          typeof latest.y === "number"
+            ? latest.y
+            : Number.parseFloat(String(latest.y));
+        if (!leaving) return;
+        if (y <= COVERS_HEADER) onCovered();
+        if (y <= BOTTOM_AT_CENTRE) onBottomAtCentre();
       }}
       onAnimationComplete={() => leaving && onGone()}
     >

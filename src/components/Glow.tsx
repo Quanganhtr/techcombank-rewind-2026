@@ -12,9 +12,18 @@ type Layer = {
 };
 
 /** Stacked blurred pills — how the design builds its light source. */
-export function Glow({ layers, className }: { layers: Layer[]; className?: string }) {
+export function Glow({
+  layers,
+  className,
+}: {
+  layers: Layer[];
+  className?: string;
+}) {
   return (
-    <div className={cn("pointer-events-none absolute", className)} aria-hidden="true">
+    <div
+      className={cn("pointer-events-none absolute", className)}
+      aria-hidden="true"
+    >
       {layers.map((l, i) => (
         <div
           key={i}

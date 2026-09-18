@@ -22,8 +22,16 @@ export function CrtScreen({
   return (
     <div
       aria-hidden="true"
-      className={cn("crt-scanlines pointer-events-none absolute inset-x-0", className)}
-      style={{ top: -2, bottom: 0, opacity, ["--crt-roll" as string]: `${rollSeconds}s` }}
+      className={cn(
+        "crt-scanlines pointer-events-none absolute inset-x-0",
+        className,
+      )}
+      style={{
+        top: -2,
+        bottom: 0,
+        opacity,
+        ["--crt-roll" as string]: `${rollSeconds}s`,
+      }}
     />
   );
 }

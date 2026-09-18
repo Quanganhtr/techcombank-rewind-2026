@@ -1,14 +1,11 @@
 import { motion } from "motion/react";
 import { StatusBar } from "../components/StatusBar";
 import { Header } from "../components/Header";
-import { Composer } from "../components/Composer";
 import { Glow, ANSWER_GLOW } from "../components/Glow";
 import { CrtScreen } from "../components/CrtScreen";
 
-const QUESTION = "Tài sản của tôi\nnăm nay thế nào?";
-
 /** Screen 3 — the answer. */
-export function FirstSentence({ next }: { next: () => void }) {
+export function FirstSentence() {
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">
       <div className="grain absolute inset-0">
@@ -39,8 +36,6 @@ export function FirstSentence({ next }: { next: () => void }) {
           Thuộc top 25% khách hàng Private có giá trị tài sản cao nhất
         </p>
       </motion.div>
-
-      <Composer question={QUESTION} onSend={next} />
     </div>
   );
 }

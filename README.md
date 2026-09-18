@@ -39,8 +39,13 @@ away in a single tween. The screens swap the moment the dome's top passes y=50 a
 covers the header, driven by its real position rather than a timer, so the crossfade
 stays hidden however the easing is retuned.
 
-**Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` — the blurred
-layers stay cached, nothing re-rasterises.
+The chat input rises from below the screen at the moment the dome's **bottom edge**
+crosses the middle of the screen — dome top at −478, since the dome is 956 tall. Like
+the screen swap, it is triggered by the dome's real position, not a timer. It lives in
+the shell rather than in a screen, because it persists across the conversation.
+
+**Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` for both — the
+blurred layers stay cached, nothing re-rasterises.
 
 ## Adding screens
 

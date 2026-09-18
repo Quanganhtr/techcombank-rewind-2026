@@ -16,7 +16,11 @@ function useFitScale(margin = 120) {
   useEffect(() => {
     const fit = () =>
       setScale(
-        Math.min(1, (window.innerHeight - margin) / FRAME_H, (window.innerWidth - margin) / FRAME_W),
+        Math.min(
+          1,
+          (window.innerHeight - margin) / FRAME_H,
+          (window.innerWidth - margin) / FRAME_W,
+        ),
       );
     fit();
     window.addEventListener("resize", fit);
@@ -29,7 +33,10 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
   const scale = useFitScale();
 
   return (
-    <div style={{ width: FRAME_W * scale, height: FRAME_H * scale }} className="relative">
+    <div
+      style={{ width: FRAME_W * scale, height: FRAME_H * scale }}
+      className="relative"
+    >
       <div
         style={{
           width: FRAME_W,
@@ -41,7 +48,12 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
       >
         {/* screen sits behind the frame, so the bezel and Dynamic Island mask it */}
         <div
-          style={{ left: SCREEN_X, top: SCREEN_Y, width: SCREEN_W, height: SCREEN_H }}
+          style={{
+            left: SCREEN_X,
+            top: SCREEN_Y,
+            width: SCREEN_W,
+            height: SCREEN_H,
+          }}
           className="absolute overflow-hidden rounded-[56px] bg-black"
         >
           {children}

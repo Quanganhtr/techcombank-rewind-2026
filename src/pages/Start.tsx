@@ -16,12 +16,16 @@ export function Start() {
         </div>
 
         <div className="absolute inset-x-0 top-0 flex items-start justify-between bg-black px-[24px] pb-0 pt-[24px]">
-          <p className="text-[40px] font-extralight leading-[56px] text-white">QUANG ƠI!</p>
+          <p className="text-[40px] font-extralight leading-[56px] text-white">
+            QUANG ƠI!
+          </p>
           <img src={logo} alt="Techcombank" width={56} height={56} />
         </div>
 
         <div className="absolute inset-x-0 top-[80px] bg-black p-[24px] shadow-[inset_0_-0.5px_0_0_#fff]">
-          <p className="text-[40px] font-extralight leading-[56px] text-white">TRÒ CHUYỆN VỚI</p>
+          <p className="text-[40px] font-extralight leading-[56px] text-white">
+            TRÒ CHUYỆN VỚI
+          </p>
         </div>
       </div>
     </div>

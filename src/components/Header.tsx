@@ -7,7 +7,13 @@ export function Header({ title }: { title: string }) {
       <span className="absolute right-[96px] top-[40px] text-[20px] font-extralight leading-[24px] text-white">
         {title}
       </span>
-      <img src={logo} alt="Techcombank" width={56} height={56} className="absolute left-[360px] top-[24px]" />
+      <img
+        src={logo}
+        alt="Techcombank"
+        width={56}
+        height={56}
+        className="absolute left-[360px] top-[24px]"
+      />
     </div>
   );
 }
