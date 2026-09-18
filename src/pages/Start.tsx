@@ -17,9 +17,12 @@ export function Start({ next }: { next: () => void }) {
       <div className="absolute inset-x-0 top-[130px] p-[24px]">
         <p className="text-[40px] font-extralight leading-[56px] text-white">TRÒ CHUYỆN VỚI</p>
       </div>
-      <p className="absolute left-[-44px] top-[204px] w-[529px] text-[200px] font-light leading-[196px] text-white">
-        2026
-      </p>
+      {/* 440×164 container; the numerals are a 499×196 box rotated -12deg about its centre */}
+      <div className="absolute inset-x-0 top-[235px] h-[164px]">
+        <p className="absolute left-[-30px] top-[-16px] w-[499px] rotate-[-12deg] text-[200px] font-light leading-[196px] text-white">
+          2026
+        </p>
+      </div>
 
       {/* the dome of light, and the button sitting in its dark centre */}
       <div className="grain absolute left-0 top-[399px] h-[558px] w-[440px] overflow-hidden rounded-t-full bg-glow-50">
