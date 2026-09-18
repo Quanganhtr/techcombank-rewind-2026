@@ -49,18 +49,13 @@ export function GlowDome({
 }) {
   /**
    * Mirrors the dome's animated position, so the glow's growth is locked to where the
-   * dome actually is rather than to a duration: full 1.5x exactly as the dome's bottom
+   * dome actually is rather than to a duration: full 2x exactly as the dome's bottom
    * edge reaches the middle of the screen.
    */
   const domeY = useMotionValue<number>(DOME_Y.rest);
-  const glowScale = useTransform(
-    domeY,
-    [DOME_Y.rest, BOTTOM_AT_CENTRE],
-    [1, 1.5],
-    {
-      clamp: true,
-    },
-  );
+  const glowScale = useTransform(domeY, [DOME_Y.rest, BOTTOM_AT_CENTRE], [1, 2], {
+    clamp: true,
+  });
 
   return (
     <motion.div
