@@ -9,19 +9,22 @@ export function Start({ next }: { next: () => void }) {
     <div className="relative h-full w-full overflow-hidden bg-black">
       <StatusBar />
 
-      {/* greeting and logo share one full-width row: 24px left, right and top */}
-      <div className="absolute inset-x-0 top-[50px] flex items-start justify-between px-[24px] pb-0 pt-[24px]">
-        <p className="text-[40px] font-light leading-[56px] text-white">QUANG ƠI!</p>
-        <img src={logo} alt="Techcombank" width={56} height={56} />
-      </div>
-      <div className="absolute inset-x-0 top-[130px] p-[24px]">
-        <p className="text-[40px] font-extralight leading-[56px] text-white">TRÒ CHUYỆN VỚI</p>
-      </div>
-      {/* 440×164 container; the numerals are a 499×196 box rotated -12deg about its centre */}
-      <div className="absolute inset-x-0 top-[235px] h-[164px]">
-        <p className="absolute left-[-30px] top-[-16px] w-[499px] rotate-[-12deg] text-[200px] font-light leading-[196px] text-white">
-          2026
-        </p>
+      {/* Header: the year sits under both black bars, so they clip the rotated numerals */}
+      <div className="absolute inset-x-0 top-[50px] h-[349px]">
+        <div className="absolute inset-x-0 top-[185px] h-[164px]">
+          <p className="absolute left-[-30px] top-[-16px] w-[499px] rotate-[-12deg] text-[200px] font-light leading-[196px] text-white">
+            2026
+          </p>
+        </div>
+
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between bg-black px-[24px] pb-0 pt-[24px]">
+          <p className="text-[40px] font-light leading-[56px] text-white">QUANG ƠI!</p>
+          <img src={logo} alt="Techcombank" width={56} height={56} />
+        </div>
+
+        <div className="absolute inset-x-0 top-[80px] bg-black p-[24px] shadow-[inset_0_-0.5px_0_0_#fff]">
+          <p className="text-[40px] font-extralight leading-[56px] text-white">TRÒ CHUYỆN VỚI</p>
+        </div>
       </div>
 
       {/* the dome of light, and the button sitting in its dark centre */}
