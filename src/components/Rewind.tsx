@@ -19,6 +19,10 @@ export function Rewind() {
   const [composerShown, setComposerShown] = useState(() => initialIndex() > 0);
   /** The headline types itself once the dome is off the screen entirely. */
   const [domeCleared, setDomeCleared] = useState(() => initialIndex() > 0);
+  /** The composer's question follows the headline. Already done past that screen. */
+  const [questionTyping, setQuestionTyping] = useState(
+    () => initialIndex() > 1,
+  );
   const swapped = useRef(false);
 
   const go = useCallback((to: number) => {
@@ -35,6 +39,7 @@ export function Rewind() {
       setLeaving(false);
       setComposerShown(false);
       setDomeCleared(false);
+      setQuestionTyping(false);
       swapped.current = false;
     }
   }, [index]);
@@ -81,7 +86,12 @@ export function Rewind() {
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0"
             >
-              {page.render({ next, prev, domeCleared })}
+              {page.render({
+                next,
+                prev,
+                domeCleared,
+                onHeadlineTyped: () => setQuestionTyping(true),
+              })}
             </motion.div>
           </AnimatePresence>
 
@@ -90,6 +100,7 @@ export function Rewind() {
             question={"Tài sản của tôi\nnăm nay thế nào?"}
             onSend={next}
             shown={composerShown}
+            typing={questionTyping}
           />
 
           {domeMounted && (

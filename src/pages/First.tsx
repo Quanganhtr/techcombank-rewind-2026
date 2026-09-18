@@ -5,7 +5,13 @@ import { Glow, COMPOSER_GLOW } from "../components/Glow";
 import { CrtScreen } from "../components/CrtScreen";
 
 /** Screen 2 — 2026 opens the conversation. */
-export function First({ domeCleared }: { domeCleared: boolean }) {
+export function First({
+  domeCleared,
+  onHeadlineTyped,
+}: {
+  domeCleared: boolean;
+  onHeadlineTyped: () => void;
+}) {
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">
       <div className="grain absolute inset-0">
@@ -17,7 +23,11 @@ export function First({ domeCleared }: { domeCleared: boolean }) {
       <Header title="Techcombank Rewind" />
 
       <h1 className="absolute left-[24px] top-[154px] w-[392px] text-[40px] font-extralight leading-[56px] text-white">
-        <GlowType text="Năm 2026 của bạn ổn chứ?" playing={domeCleared} />
+        <GlowType
+          text="Năm 2026 của bạn ổn chứ?"
+          playing={domeCleared}
+          onDone={onHeadlineTyped}
+        />
       </h1>
     </div>
   );

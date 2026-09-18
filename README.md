@@ -49,9 +49,18 @@ blurred layers stay cached, nothing re-rasterises.
 
 ## The headline typing
 
-"Năm 2026 của bạn ổn chứ?" types itself once the dome is clear of the screen. Each
-character ignites amber-white and cools to plain white over the next four characters,
-with a block cursor on the character being struck.
+Two lines type in sequence once the dome is clear of the screen: the headline
+"Năm 2026 của bạn ổn chứ?", then the composer's question. Each character ignites
+amber-white and cools to plain white over the next four, with a block cursor on the
+character being struck.
+
+| | Starts | Done |
+| --- | --- | --- |
+| Headline | ~1.1s after the press | ~2.0s |
+| Question | ~2.0s | ~3.2s |
+
+The second is chained off the first's `animationend`, not a timer, so retiming one
+carries the other along.
 
 It runs off one registered custom property, `--cursor`, animated 0→N in CSS. Every
 character knows its own index and derives its own heat, colour and shadow from it — so

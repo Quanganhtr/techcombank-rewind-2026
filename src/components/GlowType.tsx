@@ -29,11 +29,14 @@ export function GlowType({
   text,
   playing,
   charMs = 38,
+  onDone,
   className,
 }: {
   text: string;
   playing: boolean;
   charMs?: number;
+  /** Fires when the last character has been struck. */
+  onDone?: () => void;
   className?: string;
 }) {
   const chars = useMemo(() => graphemes(text), [text]);
@@ -42,6 +45,9 @@ export function GlowType({
     <span
       aria-label={text}
       className={cn("glow-type", playing && "glow-type--playing", className)}
+      onAnimationEnd={(e) => {
+        if (e.animationName === "glow-type") onDone?.();
+      }}
       style={
         {
           "--glow-type-count": chars.length,

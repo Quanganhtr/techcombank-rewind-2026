@@ -8,6 +8,8 @@ export type PageProps = {
   prev: () => void;
   /** True once the dome is clear of the screen, or straight away on a deep link. */
   domeCleared: boolean;
+  /** Called when a screen's headline has finished typing. */
+  onHeadlineTyped: () => void;
 };
 
 export type Page = {
@@ -20,7 +22,9 @@ export const pages: Page[] = [
   { id: "start", render: () => <Start /> },
   {
     id: "first",
-    render: ({ domeCleared }) => <First domeCleared={domeCleared} />,
+    render: ({ domeCleared, onHeadlineTyped }) => (
+      <First domeCleared={domeCleared} onHeadlineTyped={onHeadlineTyped} />
+    ),
   },
   { id: "first-sentence", render: () => <FirstSentence /> },
 ];

@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { GlowType } from "./GlowType";
 import send from "../assets/icon-send.svg";
 
 /** Parked fully below the screen: the container sits at y=732 and is 224 tall. */
@@ -12,10 +13,13 @@ export function Composer({
   question,
   onSend,
   shown,
+  typing,
 }: {
   question: string;
   onSend: () => void;
   shown: boolean;
+  /** The question types itself in once the headline above has finished. */
+  typing: boolean;
 }) {
   return (
     <motion.div
@@ -24,8 +28,8 @@ export function Composer({
       animate={{ y: shown ? 0 : OFFSCREEN_Y }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
     >
-      <p className="absolute left-[24px] top-[24px] w-[280px] whitespace-pre-line text-[20px] font-extralight leading-[28px] text-white">
-        {question}
+      <p className="absolute left-[24px] top-[24px] w-[280px] text-[20px] font-extralight leading-[28px] text-white">
+        <GlowType text={question} playing={typing} />
       </p>
       <button
         type="button"
