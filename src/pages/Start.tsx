@@ -40,7 +40,9 @@ export function Start({ next }: { next: () => void }) {
         animate={{ scale: [1, 1.03, 1] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
       >
-        {/* dashed ring: 4px stroke centred on the 120x188 pill, 1/12 dash, butt caps */}
+        {/* dashed ring: 4px stroke centred on the 120x188 pill, 1/12 dash, butt caps.
+            pathLength normalises the perimeter to 38 whole 1+12 periods, so the
+            pattern closes evenly instead of doubling up a tick at the seam. */}
         <svg
           className="absolute left-[-2px] top-[-2px]"
           width="124"
@@ -58,6 +60,7 @@ export function Start({ next }: { next: () => void }) {
             stroke="white"
             strokeWidth="4"
             strokeDasharray="1 12"
+            pathLength={494}
           />
         </svg>
         <span className="font-system absolute inset-0 flex items-center justify-center text-center text-[18px] font-extralight leading-[21px] text-white">
