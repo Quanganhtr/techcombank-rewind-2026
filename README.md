@@ -86,7 +86,7 @@ grow.
 
 ## The dome's glow growing
 
-On the press, the dome's glow stack grows to **2×**, reaching full size exactly as the
+On the press, the dome's glow stack grows to **3×**, reaching full size exactly as the
 dome's bottom edge crosses the middle of the screen. The scale is derived from the
 dome's live position with `useTransform`, not from a duration, so it stays locked to the
 travel if the easing or duration changes.
