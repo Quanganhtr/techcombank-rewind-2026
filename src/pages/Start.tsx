@@ -1,15 +1,13 @@
 import { StatusBar } from "../components/StatusBar";
-import { Glow, START_GLOW } from "../components/Glow";
-import { CrtScreen } from "../components/CrtScreen";
 import logo from "../assets/logo-tcb.svg";
 
-/** Screen 1 — the invitation. */
-export function Start({ next }: { next: () => void }) {
+/** Screen 1 — the invitation. The dome and its button live in the shell, above this. */
+export function Start() {
   return (
     <div className="relative h-full w-full overflow-hidden bg-black">
       <StatusBar />
 
-      {/* Header: the year sits under both black bars, so they clip the rotated numerals */}
+      {/* the year sits under both black bars, so they clip the rotated numerals */}
       <div className="absolute inset-x-0 top-[50px] h-[349px]">
         <div className="absolute inset-x-0 top-[185px] h-[164px]">
           <p className="absolute left-[-30px] top-[-16px] w-[499px] rotate-[-12deg] text-[200px] font-extralight leading-[196px] text-white">
@@ -26,48 +24,6 @@ export function Start({ next }: { next: () => void }) {
           <p className="text-[40px] font-extralight leading-[56px] text-white">TRÒ CHUYỆN VỚI</p>
         </div>
       </div>
-
-      {/* the dome of light, and the button sitting in its dark centre */}
-      <div className="grain dome-inner-light absolute left-0 top-[399px] h-[558px] w-[440px] overflow-hidden rounded-t-full bg-glow-50">
-        <Glow layers={START_GLOW} className="inset-0" />
-        <CrtScreen />
-      </div>
-
-      <button
-        type="button"
-        onClick={next}
-        aria-label="Nhấn để bắt đầu"
-        className="absolute left-[160px] top-[571px] h-[188px] w-[120px] rounded-full"
-      >
-        {/* dashed ring: 4px stroke centred on the 120x188 pill, 1/12 dash, butt caps.
-            pathLength normalises the perimeter to 38 whole 1+12 periods, so the
-            pattern closes evenly instead of doubling up a tick at the seam. */}
-        <svg
-          className="absolute left-[-2px] top-[-2px]"
-          width="124"
-          height="192"
-          viewBox="0 0 124 192"
-          aria-hidden="true"
-        >
-          <rect
-            x="2"
-            y="2"
-            width="120"
-            height="188"
-            rx="60"
-            fill="none"
-            stroke="white"
-            strokeWidth="4"
-            strokeDasharray="1 12"
-            pathLength={494}
-          />
-        </svg>
-        <span className="font-system absolute inset-0 flex items-center justify-center text-center text-[18px] font-extralight leading-[21px] text-white">
-          NHẤN ĐỂ
-          <br />
-          BẮT ĐẦU
-        </span>
-      </button>
     </div>
   );
 }

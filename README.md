@@ -12,13 +12,33 @@ board "Option 1".
 
 | # | Screen | Advances when |
 | --- | --- | --- |
-| 1 | `Start` — QUANG ƠI! / TRÒ CHUYỆN VỚI 2026 | you press the dotted **NHẤN ĐỂ BẮT ĐẦU** ring |
+| 1 | `Start` — QUANG ƠI! / TRÒ CHUYỆN VỚI 2026 | you press the dotted **BẮT ĐẦU** ring |
 | 2 | `First` — "Năm 2026 của bạn ổn chứ?" | you press **Gửi** |
 | 3 | `FirstSentence` — the answer card, +28.7% | — |
 
 Screens drive themselves through their own controls, so there is no autoplay and no tap-to-advance
 overlay that would swallow a button press. For presenting, `←` and `→` step through the flow, `R`
 returns to the start, and `?page=2` opens directly on a given screen.
+
+## The dome transition
+
+Pressing **BẮT ĐẦU** plays moves 1–3 from the design. The dome is one rigid group —
+pale field, glow stack, ring and label all hold the same offsets from its top edge in
+every frame — so the whole move is a single `translateY`:
+
+| Stage | Dome top | Figma frame |
+| --- | --- | --- |
+| rest | 399 | Start |
+| charge | 182 | move 1 |
+| travelling | → −956 | move 2, move 3 |
+
+Figma draws the dome 558 tall at rest and 956 tall once it moves, but at rest the extra
+height falls past the screen edge, so a fixed 956 is visually identical and keeps the
+animation a pure transform. The screens swap 250ms into the travel, while the dome
+covers the header, so the crossfade never shows.
+
+**Native:** `.offset(y:)` on a `ZStack` / `Modifier.offset` on a `Box` — the blurred
+layers stay cached, nothing re-rasterises.
 
 ## Adding screens
 

@@ -12,7 +12,7 @@ export type Page = {
 
 /** The flow, in order. Each screen advances itself through its own control. */
 export const pages: Page[] = [
-  { id: "start", render: ({ next }) => <Start next={next} /> },
+  { id: "start", render: () => <Start /> },
   { id: "first", render: ({ next }) => <First next={next} /> },
   { id: "first-sentence", render: ({ next }) => <FirstSentence next={next} /> },
 ];

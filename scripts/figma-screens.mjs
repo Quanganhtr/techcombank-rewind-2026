@@ -1,7 +1,7 @@
 /** Pulls full trees + PNG renders for every screen on the "Option 1" board. */
 import { readFileSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 const FILE_KEY = "xo6Gp5G7NvdKw2NZbRZfKZ";
-const IDS = ["1:69", "1:92", "1:113"];
+const IDS = ["10:153", "10:50", "10:198", "10:342", "1:92", "1:113"];
 const TOKEN = process.env.FIGMA_TOKEN ??
   (existsSync(".env.local") ? readFileSync(".env.local", "utf8").match(/^FIGMA_TOKEN=(.+)$/m)?.[1].trim() : null);
 const api = async (p) => {
