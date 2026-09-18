@@ -49,8 +49,8 @@ blurred layers stay cached, nothing re-rasterises.
 
 ## The typing reveal
 
-The composer's question, "Tài sản của tôi / năm nay thế nào?", types itself the moment
-the chat box finishes sliding up — roughly 1.5s after the press, finishing at ~2.7s.
+The composer's question, "Cũng cũng. Tài sản của tôi / năm nay thế nào?", types itself
+the moment the chat box finishes sliding up — roughly 1.5s after the press.
 Each character ignites amber-white and cools to plain white over the next four, with a
 block cursor on the character being struck.
 

@@ -89,7 +89,7 @@ export function Rewind() {
 
           {/* above the screens, as the design layers it — it occludes 2026 on the way up */}
           <Composer
-            question={"Tài sản của tôi\nnăm nay thế nào?"}
+            question={"Cũng cũng. Tài sản của tôi\nnăm nay thế nào?"}
             onSend={next}
             shown={composerShown}
             typing={questionTyping}
