@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useMotionValue, useTransform } from "motion/react";
 import { Glow, START_GLOW } from "./Glow";
 import { CrtScreen } from "./CrtScreen";
 
@@ -29,6 +29,9 @@ const BOTTOM_AT_CENTRE = 478 - DOME_H;
 /** The dome's own top edge reaching the top of the screen. */
 const TOP_AT_SCREEN = 0;
 
+/** The glow stack's own centre, so it grows in place rather than drifting. */
+const GLOW_ORIGIN = "220px 266px";
+
 export function GlowDome({
   leaving,
   onBegin,
@@ -44,6 +47,21 @@ export function GlowDome({
   onTopAtScreen: () => void;
   onGone: () => void;
 }) {
+  /**
+   * Mirrors the dome's animated position, so the glow's growth is locked to where the
+   * dome actually is rather than to a duration: full 1.5x exactly as the dome's bottom
+   * edge reaches the middle of the screen.
+   */
+  const domeY = useMotionValue<number>(DOME_Y.rest);
+  const glowScale = useTransform(
+    domeY,
+    [DOME_Y.rest, BOTTOM_AT_CENTRE],
+    [1, 1.5],
+    {
+      clamp: true,
+    },
+  );
+
   return (
     <motion.div
       className="dome-inner-light grain absolute inset-x-0 z-40 overflow-hidden rounded-[220px] bg-dome"
@@ -61,6 +79,7 @@ export function GlowDome({
           typeof latest.y === "number"
             ? latest.y
             : Number.parseFloat(String(latest.y));
+        domeY.set(y);
         if (!leaving) return;
         if (y <= COVERS_HEADER) onCovered();
         if (y <= TOP_AT_SCREEN) onTopAtScreen();
@@ -68,7 +87,12 @@ export function GlowDome({
       }}
       onAnimationComplete={() => leaving && onGone()}
     >
-      <Glow layers={START_GLOW} className="inset-0" pulse />
+      <motion.div
+        className="pointer-events-none absolute inset-0"
+        style={{ scale: glowScale, transformOrigin: GLOW_ORIGIN }}
+      >
+        <Glow layers={START_GLOW} className="inset-0" pulse />
+      </motion.div>
       <CrtScreen />
 
       <button

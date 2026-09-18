@@ -84,6 +84,17 @@ instead of expanding around a point you can see.
 Pass `rise` to `<Glow>`: omit it for no rise, `false` to hold it small, `true` to let it
 grow.
 
+## The dome's glow growing
+
+On the press, the dome's glow stack grows to **1.5×**, reaching full size exactly as the
+dome's bottom edge crosses the middle of the screen. The scale is derived from the
+dome's live position with `useTransform`, not from a duration, so it stays locked to the
+travel if the easing or duration changes.
+
+It grows about the stack's own centre (220, 266), so the ring stays centred in the
+expanding core. The heartbeat runs on an inner element, so the two scales compose
+without fighting over one transform.
+
 ## The glow heartbeat
 
 The dome's glow stack beats slowly — a lub-dub at 1.030 then 1.045, 600ms apart, then a
