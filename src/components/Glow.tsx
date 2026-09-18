@@ -14,14 +14,21 @@ type Layer = {
 /** Stacked blurred pills — how the design builds its light source. */
 export function Glow({
   layers,
+  pulse,
   className,
 }: {
   layers: Layer[];
+  /** Beat the whole stack slowly, like a heart. */
+  pulse?: boolean;
   className?: string;
 }) {
   return (
     <div
-      className={cn("pointer-events-none absolute", className)}
+      className={cn(
+        "pointer-events-none absolute",
+        pulse && "glow-heartbeat",
+        className,
+      )}
       aria-hidden="true"
     >
       {layers.map((l, i) => (

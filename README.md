@@ -70,6 +70,19 @@ Speed is `charMs` on the component (38ms; ~0.9s for this line).
 with `SpanStyle(shadow=…)`, both driven by one animated float. Use attributed strings
 rather than a view per character, or line wrapping becomes manual on both platforms.
 
+## The glow heartbeat
+
+The dome's glow stack beats slowly — a lub-dub at 1.030 then 1.045, 600ms apart, then a
+rest, on a 3s cycle. The whole stack is scaled as one container, so the seven blurred
+layers stay cached and only get re-composited; nothing re-blurs. `transform-origin` is
+the stack's own centre (220, 266) rather than the dome's, so it breathes in place.
+
+Pass `pulse` to `<Glow>` to apply it. Only the dome uses it — the composer's glow is
+still.
+
+**Native:** `.scaleEffect()` with a repeating animation / `Modifier.graphicsLayer` with
+`rememberInfiniteTransition`. Transform only, so it stays cheap on both.
+
 ## The start ring
 
 From the Figma motion timeline on node `10:173`:

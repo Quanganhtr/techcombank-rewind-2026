@@ -63,7 +63,7 @@ export function GlowDome({
       }}
       onAnimationComplete={() => leaving && onGone()}
     >
-      <Glow layers={START_GLOW} className="inset-0" />
+      <Glow layers={START_GLOW} className="inset-0" pulse />
       <CrtScreen />
 
       <button
