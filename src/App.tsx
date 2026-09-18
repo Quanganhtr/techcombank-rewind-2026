@@ -17,7 +17,7 @@ export default function App() {
           Chạm nửa phải để đi tiếp, nửa trái để quay lại. Giữ để tạm dừng.
         </p>
         <p className="text-[13px] text-tcb-bone/50">
-          Bản demo tương tác — số liệu minh hoạ, không phải dữ liệu tài khoản thật.
+          Bản demo tương tác — đang chờ các trang thiết kế.
         </p>
       </footer>
     </main>
