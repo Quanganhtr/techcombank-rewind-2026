@@ -142,7 +142,8 @@
      Held at the start until the class is unpaused. */
   .glow-rise {
     transform-origin: 220px 1032px;
-    animation: glow-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both paused;
+    /* a slow swell, not a snap: the old ease-out reached 95% within 200ms */
+    animation: glow-rise 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both paused;
   }
 
   .glow-rise--go {

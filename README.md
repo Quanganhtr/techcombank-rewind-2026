@@ -76,10 +76,13 @@ The glow behind the chat box is held at 60% while the dome covers it, then grows
 place the moment the dome's **top edge** reaches the top of the screen — so the light
 hands off from one to the other rather than simply appearing.
 
-`transform-origin` is that stack's own centre (220, 1032), which sits below the screen
-edge, so it swells upward from the bottom instead of expanding around a point you can
-see. Pass `rise` to `<Glow>`: omit it for no rise, `false` to hold it small, `true` to
-let it grow.
+It swells over 1.6s, a near-linear ramp rather than a snap — the light keeps growing
+behind the chat box after it has landed. `transform-origin` is that stack's own centre
+(220, 1032), which sits below the screen edge, so it swells upward from the bottom
+instead of expanding around a point you can see.
+
+Pass `rise` to `<Glow>`: omit it for no rise, `false` to hold it small, `true` to let it
+grow.
 
 ## The glow heartbeat
 
