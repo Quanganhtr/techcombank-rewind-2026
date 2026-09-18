@@ -6,7 +6,7 @@ type Layer = {
   w: number;
   h: number;
   color: string;
-  /** Figma layer-blur radius; CSS std-dev is a little under half of it. */
+  /** Figma layer-blur radius; CSS uses half of it. */
   blur: number;
   radius?: number;
 };
@@ -25,7 +25,7 @@ export function Glow({ layers, className }: { layers: Layer[]; className?: strin
             height: l.h,
             background: l.color,
             borderRadius: l.radius ?? 999,
-            filter: `blur(${l.blur / 2.4}px)`,
+            filter: `blur(${l.blur / 2}px)`,
           }}
           className="absolute"
         />

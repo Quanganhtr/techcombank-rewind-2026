@@ -28,7 +28,7 @@ export function Start({ next }: { next: () => void }) {
       </div>
 
       {/* the dome of light, and the button sitting in its dark centre */}
-      <div className="grain absolute left-0 top-[399px] h-[558px] w-[440px] overflow-hidden rounded-t-full bg-glow-50">
+      <div className="grain dome-inner-light absolute left-0 top-[399px] h-[558px] w-[440px] overflow-hidden rounded-t-full bg-glow-50">
         <Glow layers={START_GLOW} className="inset-0" />
       </div>
 
