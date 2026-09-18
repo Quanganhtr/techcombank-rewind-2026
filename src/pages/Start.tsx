@@ -40,18 +40,23 @@ export function Start({ next }: { next: () => void }) {
         animate={{ scale: [1, 1.03, 1] }}
         transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
       >
-        {/* dotted ring — 4px round caps on a 1/12 dash, as drawn in Figma */}
-        <svg className="absolute inset-0" width="120" height="188" viewBox="0 0 120 188" aria-hidden="true">
+        {/* dashed ring: 4px stroke centred on the 120x188 pill, 1/12 dash, butt caps */}
+        <svg
+          className="absolute left-[-2px] top-[-2px]"
+          width="124"
+          height="192"
+          viewBox="0 0 124 192"
+          aria-hidden="true"
+        >
           <rect
             x="2"
             y="2"
-            width="116"
-            height="184"
-            rx="58"
+            width="120"
+            height="188"
+            rx="60"
             fill="none"
             stroke="white"
             strokeWidth="4"
-            strokeLinecap="round"
             strokeDasharray="1 12"
           />
         </svg>
