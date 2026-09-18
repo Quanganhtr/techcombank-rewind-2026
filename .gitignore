@@ -7,3 +7,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 *.log
+
+# pulled Figma output — regenerate with scripts/figma-pull.mjs
+figma/
+.env.local
