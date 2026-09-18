@@ -95,6 +95,19 @@ It grows about the stack's own centre (220, 266), so the ring stays centred in t
 expanding core. The heartbeat runs on an inner element, so the two scales compose
 without fighting over one transform.
 
+## The light sweep
+
+A soft band travels **up** through the dome's glow — the same direction the dome, the
+chat box and the light behind it all move — then rests for 1.9s before the next pass, on
+a 3.6s loop. It blends with `screen`, so it brightens the amber rather than washing it
+toward white.
+
+Transform and opacity only, so nothing re-blurs. Strength is the gradient's alpha in
+`.glow-sheen`; pace is the 3.6s duration and the 8%/40%/48% stops.
+
+**Native:** a `LinearGradient` clipped to the glow with `.blendMode(.screen)` on iOS,
+`Brush.linearGradient` with `BlendMode.Screen` on Compose.
+
 ## The glow heartbeat
 
 The dome's glow stack beats slowly — a lub-dub at 1.030 then 1.045, 600ms apart, then a

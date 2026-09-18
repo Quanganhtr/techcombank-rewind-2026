@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useTransform } from "motion/react";
 import { Glow, START_GLOW } from "./Glow";
 import { CrtScreen } from "./CrtScreen";
+import { Sheen } from "./Sheen";
 
 /**
  * The ACTION dome. It is one rigid group — pale field, glow stack, ring and label all
@@ -53,9 +54,14 @@ export function GlowDome({
    * edge reaches the middle of the screen.
    */
   const domeY = useMotionValue<number>(DOME_Y.rest);
-  const glowScale = useTransform(domeY, [DOME_Y.rest, BOTTOM_AT_CENTRE], [1, 2], {
-    clamp: true,
-  });
+  const glowScale = useTransform(
+    domeY,
+    [DOME_Y.rest, BOTTOM_AT_CENTRE],
+    [1, 2],
+    {
+      clamp: true,
+    },
+  );
 
   return (
     <motion.div
@@ -88,6 +94,7 @@ export function GlowDome({
       >
         <Glow layers={START_GLOW} className="inset-0" pulse />
       </motion.div>
+      <Sheen />
       <CrtScreen />
 
       <button
